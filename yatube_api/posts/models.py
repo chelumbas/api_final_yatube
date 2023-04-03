@@ -56,4 +56,9 @@ class Follow(models.Model):
             models.UniqueConstraint(
                 fields=('user', 'following'),
                 name='unique_follow'
-            ),)
+            ),
+            models.CheckConstraint(
+                check=~models.Q(following_id=models.F('user')),
+                name='subscription_restriction_to_self',
+            )
+        )

@@ -9,6 +9,7 @@ from .serializers import (
     FollowSerializer
 )
 from .permissions import IsAuthorOrReadOnly
+from .viewsets import CreateReadModelViewSet
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
@@ -46,8 +47,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, post=self.get_post())
 
 
-class FollowViewSet(viewsets.ModelViewSet):
-
+class FollowViewSet(CreateReadModelViewSet):
     serializer_class = FollowSerializer
     permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (filters.SearchFilter,)
